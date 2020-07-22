@@ -1,6 +1,6 @@
 function operate (num1, num2, operator) {
     if (operator === '+') {
-        return add(num1,num2);
+        return add (num1,num2);
     } else if (operator === '-') {
         return subtract (num1, num2);
     } else if (operator === '*') {

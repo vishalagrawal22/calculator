@@ -1,3 +1,53 @@
-h1 {
-    color: #f00;
+input {
+    padding: 10px;
+    margin: 10px;
+    font-size: 30px;
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    background-color: #284b63;
+    border: 2px solid black;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.calculator-container {
+    padding: 20px;
+    display: inline-block;
+    background-color: #244359;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+#display-area {
+    width: 300px;
+    height: 100px;
+    padding: 25px;
+    font-size: 45px;
+    margin: 10px;
+    text-align: right;
+    background-color: #284b63;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.clear {
+    width: 165px;
+    height: 70px;
+}
+
+.scrollable {
+    overflow-x: auto;
+}
+
+.presolution {
+    color: white;
+    height: 45%;
+    margin-top: 5%;
+}
+
+.postsolution {
+    color: grey;
+    height: 45%;
+    margin-bottom: 5%;
 }
