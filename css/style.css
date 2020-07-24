@@ -8,6 +8,7 @@ input {
     background-color: #284b63;
     border: 2px solid black;
     color: #ffffff;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -16,7 +17,8 @@ input {
     display: inline-block;
     background-color: #244359;
     border: 2px solid black;
-    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+    border-radius: 30px;
 }
 
 #display-area {
@@ -26,6 +28,7 @@ input {
     font-size: 45px;
     margin: 10px;
     text-align: right;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
     background-color: #284b63;
     border: 2px solid black;
     border-radius: 10px;
@@ -50,4 +53,8 @@ input {
     color: grey;
     height: 45%;
     margin-bottom: 5%;
+}
+
+.operators {;
+    background-color: #1d3547;
 }
