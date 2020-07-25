@@ -30,12 +30,14 @@ const numberButtonsList = document.querySelectorAll(".numbers");
 const clearButtonsList = document.querySelectorAll(".clear");
 const operatorButtonsList = document.querySelectorAll(".operators");
 const equalsButton = document.querySelector(".equals");
+const decimal = document.querySelector(".decimal");
 const preSolutionDisplay = document.querySelector(".presolution");
 const postSolutionDisplay = document.querySelector(".postsolution");
+const operationOrder = ['*','/','+','-'];
 
-let num1 = null;
-let num2 = null;
-let operator = "";
+let numbers = [];
+let operators = [];
+let startIndex = 0;
 
 numberButtonsList.forEach(numberButton => numberButton.addEventListener("click", (event) => {
     preSolutionDisplay.textContent += event.target.value;
@@ -45,35 +47,88 @@ clearButtonsList.forEach(clearButton => clearButton.addEventListener("click", (e
     if (event.target.value === "clear") {
         let currentText = preSolutionDisplay.textContent;
         preSolutionDisplay.textContent = currentText.substring(0, currentText.length - 1);
+        let deleted = currentText.charAt(currentText.length - 1);
+        if (deleted === ".") {
+            decimal.addEventListener("click", addDecimal);
+        }
+        else if (deleted === "*" || deleted === "/" || deleted === "+" ||deleted === "-") {
+            numbers.pop();
+            operators.pop();
+            startIndex = preSolutionDisplay.textContent.lastIndexOf(operators[operators.length - 1]) + 1;
+        }
     } else if (event.target.value === "clear all") {
         clearVariables();
-        preSolutionDisplay.textContent = "";
-        postSolutionDisplay.textContent = "";
+        clearScreen();
     }
 }));
 
 operatorButtonsList.forEach(operatorButton => operatorButton.addEventListener("click", (event) => {
-    num1 = Number(preSolutionDisplay.textContent);
-    operator =  event.target.value;
-    preSolutionDisplay.textContent += event.target.value;
+    let currentText = preSolutionDisplay.textContent.trim();
+    let currentNum = currentText.substring(startIndex);
+    if (currentNum !== "") {
+        numbers.push(Number(currentNum));
+        operators.push(event.target.value);
+        startIndex = currentText.length + 1;
+        preSolutionDisplay.textContent += event.target.value;
+    }
+    decimal.addEventListener("click", addDecimal);
 }));
 
 equalsButton.addEventListener("click", (event) => {
-    currentText = preSolutionDisplay.textContent;
-    numString = currentText.substring(currentText.indexOf(operator) + 1);
-    if (numString !== "") {
-        num2 = Number(numString);
-    }
-    if (num1 !== null && num2 !== null && operator) {
-        postSolutionDisplay.textContent = currentText;
-        let result = +operate(num1,num2,operator).toFixed(9);
-        preSolutionDisplay.textContent = result;
+    let currentText = preSolutionDisplay.textContent.trim();
+    let currentNum = currentText.substring(startIndex);
+    let exit = 0;
+    if (currentNum !== "" && operators.length !== 0) {
+        numbers.push(Number(currentNum));
+        outer: for (let i = 0; i < operationOrder.length; i++) {
+            for (let j = 0; j < operators.length; j++) {
+                if (operationOrder[i] === operators[j]) {
+                    if (operators[j] === "/" && numbers[j+1] === 0) {
+                        exit = 1;
+                        break outer;
+                    }
+                    let tempResult = operate(numbers[j], numbers[j+1], operators[j]);
+                    operators.splice(j, 1);
+                    numbers.splice(j, 2, tempResult);
+                }
+            }
+        }   
+        if (exit === 0) {
+            let finalResult = +numbers[0].toFixed(5);
+            postSolutionDisplay.style.color = "grey"
+            postSolutionDisplay.textContent = preSolutionDisplay.textContent;
+            preSolutionDisplay.textContent = finalResult;
+            resultString = finalResult.toString();
+            if (resultString.indexOf(".") === -1) {
+                decimal.addEventListener("click", addDecimal);
+            }
+        }
+        else {
+            postSolutionDisplay.style.color = "#f00"
+            postSolutionDisplay.textContent = "can't divide by 0";
+            preSolutionDisplay.textContent = "";
+        }
         clearVariables();
     }
 });
 
+decimal.addEventListener("click", addDecimal);
+
+function addDecimal() {
+    if (preSolutionDisplay.textContent.substring(startIndex).trim() !== "") {
+        preSolutionDisplay.textContent += ".";
+        decimal.removeEventListener("click", addDecimal);
+    }
+}
+
 function clearVariables() {
-    num1 = null;
-    num2 = null;
-    operator = "";
+    numbers = [];
+    operators = [];
+    startIndex = 0;
+}
+
+function clearScreen() {
+    decimal.addEventListener("click", addDecimal);
+    preSolutionDisplay.textContent = "";
+    postSolutionDisplay.textContent = "";
 }

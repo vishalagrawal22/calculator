@@ -39,18 +39,15 @@ input {
     height: 70px;
 }
 
-.scrollable {
-    overflow-x: auto;
-}
-
 .presolution {
+    overflow-x: auto;
     color: white;
     height: 45%;
     margin-top: 5%;
 }
 
 .postsolution {
-    color: grey;
+    overflow-x: auto;
     height: 45%;
     margin-bottom: 5%;
 }
