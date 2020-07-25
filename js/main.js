@@ -132,3 +132,22 @@ function clearScreen() {
     preSolutionDisplay.textContent = "";
     postSolutionDisplay.textContent = "";
 }
+
+document.addEventListener('keydown', function(event) {
+    const buttonList = document.querySelectorAll('input');
+    buttonList.forEach(button => {
+        if (button.value === event.key) {
+            button.click();
+        }
+        if (event.key === "Enter" && button.value === "=") {
+            button.click();
+        }
+        if (event.key === "Backspace" && button.value === "clear") {
+            button.click();
+        }
+        if (event.key === "Backspace" && button.value === "clear all" && event.repeat) {
+            button.click();
+        }
+    });
+
+});
