@@ -47,6 +47,7 @@ input {
 }
 
 .postsolution {
+    color: "grey";
     overflow-x: auto;
     height: 45%;
     margin-bottom: 5%;
